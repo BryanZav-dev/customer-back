@@ -79,9 +79,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.base_ref }}
 
-      ######################################################## 
+      ##################################################### 
       # 4- call publish-jar-as-artifact
-      ######################################################## 
+      #####################################################
       - name: trigger deploy artifact
         if: success()
         uses: peter-evans/repository-dispatch@v2
