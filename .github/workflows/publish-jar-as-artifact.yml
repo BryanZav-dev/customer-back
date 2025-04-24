@@ -6,7 +6,7 @@ jobs:
   dowlonad-artifact-job:
     runs-on: ubuntu-latest
     env:
-      ARTIFACT_NAME: 'ada_qartz-0.0.1-SNAPSHOT.jar'
+      ARTIFACT_NAME: 'customer-0.0.1-SNAPSHOT.jar' # The name of the artifact to be published.
     permissions:
       contents: write
       pull-requests: write
@@ -62,7 +62,7 @@ jobs:
       ######################################################## 
       - name: Publish Package
         if: success()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
          name: artifactjar
          path: ${{ github.workspace }}/target/${{ env.ARTIFACT_NAME }}   
