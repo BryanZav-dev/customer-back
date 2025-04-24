@@ -46,10 +46,10 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      ########################################################
+      #######################################################
       # 1- Dowload source code
       #Only a single commit is fetched by default, for the ref/SHA that triggered the workflow, Set fetch-depth: 0 to fetch all history for all branches and tags
-      ########################################################
+      #######################################################
       - uses: actions/checkout@v3
         with:
           #Dowload the code from destination branch (develop)
