@@ -1,25 +1,35 @@
 name: build and test feature branch  
 on:
-  push:
-    branches: 
-      - feature/*
+  pull_request: # el workflow se ejecuta cuando se crea un pull request
+    branches: [develop] # el workflow se ejecuta cuando se crea un pull request a la rama develop
+    types: [opened, reopened]
 jobs: 
   build-feature:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: pull and checkout from git repository
+        with:
+          ref: ${{ github.event.pull_request.head.sha }} #descarga el codigo de la rama que disparo el evento
 
+      - name: pull and checkout from git repository
         run: |
          echo "Pulling and checking out from git repository..."
-
 
       - name: setup java 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '17'
+
+      - name: Cache maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository # Path to cache
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }} # Cache key
+          restore-keys: |
+            ${{ runner.os }}-maven- # Prefix for cache key
+      
       - name: Build with Maven
         run: |
-          mvn clean install
+          mvn clean test package
           echo "build with maven"
